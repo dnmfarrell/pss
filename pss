@@ -1,0 +1,13 @@
+#!/bin/sh
+# prints a stream of changes to PSS (in kB) for the given process id.
+[ "$#" = "0" ] && echo 'requires a PID argument' && exit 1
+smaps="/proc/$1/smaps"
+
+sum_last=0
+while :;do
+	sum_next=$(grep '^Pss:' "$smaps" 2>/dev/null | sed 's/^Pss: \+\([[:digit:]]\+\) kB/\1/'	| awk '{ sum += $1 } END { print sum }')
+	[ "$sum_next" = "$sum_last" ] && continue      # no change
+	echo "$sum_next" | grep '^[[:digit:]]\+$'      # for the BRE
+	[ "$?" = "0" ] || break                        # pid has exited
+	sum_last="$sum_next"
+done
