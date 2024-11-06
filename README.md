@@ -1,9 +1,9 @@
-pss
-===
+pss-stream
+=========
 POSIX-compatible shell script which streams the [Proportional Set Size](https://blog.dnmfarrell.com/post/how-much-memory-is-my-program-really-using/)
 kB used by a process. The PSS is only emitted when it changes:
 
-    $ ./pss 992341
+    $ ./pss-stream 992341
     555
     556
     418
@@ -13,7 +13,7 @@ kB used by a process. The PSS is only emitted when it changes:
 I often combine it with [highs](https://github.com/dnmfarrell/highs) to find the max amount of
 memory used by a process.
 
-    $ ./pss 992341 | ./highs
+    $ ./pss-stream 992341 | ./highs
     555
     556
 
